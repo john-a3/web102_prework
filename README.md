@@ -36,6 +36,8 @@ GIF created with LICEcap
 
 Describe any challenges encountered while building the app.
 
+The main challenge that I encountered with building the app was pushing the work to GitHub. This is because I changed the README on GitHub which caused the working branch on my local computer to be behind. So I had to use the command `git pull --rebase origin main` which luckily fixed the problem and allowed me to push my code to GitHub. 
+
 ## License
 
     Copyright 2026 John Avery

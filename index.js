@@ -71,7 +71,7 @@ const contributionsCard = document.getElementById("num-contributions");
 const totalContributions = GAMES_JSON.reduce( (total, game) => {
     return total + game.backers
 }, 0)
-contributionsCard.innerHTML = totalContributions;
+contributionsCard.innerHTML = totalContributions.toLocaleString('en-US');
 
 // use reduce() to count the number of total contributions by summing the backers
 
@@ -84,7 +84,7 @@ const raisedCard = document.getElementById("total-raised");
 const totalRaised = GAMES_JSON.reduce( (total, game) => {
     return total + game.pledged
 }, 0)
-raisedCard.innerHTML = `$${totalRaised}`;
+raisedCard.innerHTML = `$${totalRaised.toLocaleString('en-US')}`;
 
 // set inner HTML using template literal
 
@@ -156,12 +156,22 @@ allBtn.addEventListener("click", showAllGames)
 const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
+const unfundedGames = GAMES_JSON.reduce( (sum, game) => {
+    return sum + (game.pledged < game.goal ? 1 : 0)
+}, 0)
 
 
 // create a string that explains the number of unfunded games using the ternary operator
-
+const displayStr = unfundedGames > 1 ? `A total of $${totalRaised.toLocaleString('en-US')} has been raised for ${GAMES_JSON.length} games. Currently, ${unfundedGames}
+ games remain unfunded. We need your help to fund these amazing games.` : `A total of $${totalRaised.toLocaleString('en-US')} has 
+ been raised for ${GAMES_JSON.length} games. Currently, 1
+ game remains unfunded. We need your help to fun these amazing games.`
 
 // create a new DOM element containing the template string and append it to the description container
+const unfundedStrDisplay = `
+<p>${displayStr}</p>
+`
+descriptionContainer.innerHTML += unfundedStrDisplay
 
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
@@ -176,7 +186,15 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
 });
 
 // use destructuring and the spread operator to grab the first and second games
+const [first, second, ...rest] = sortedGames;
 
 // create a new element to hold the name of the top pledge game, then append it to the correct element
-
+const firstGame = `
+    <p>${first.name}</p>
+`
+firstGameContainer.innerHTML += firstGame
 // do the same for the runner up item
+const secondGame = `
+    <p>${second.name}</p>
+`
+secondGameContainer.innerHTML += secondGame
